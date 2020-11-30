@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Fancy Fruit Admin</string>
+    <string name="api_url">http://coraa776fff39610ff48570b1b890.herokuapp.com/</string>
+    <string name="firebase_key">AIzaSyCPTA5f3TiygXYl-hJyUYPp_L8A4NMrwA0</string>
+</resources>

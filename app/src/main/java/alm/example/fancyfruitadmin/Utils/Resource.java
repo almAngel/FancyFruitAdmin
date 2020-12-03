@@ -44,7 +44,7 @@ public class Resource<T> {
                 .build();
 
         // Creating a parser for body responses
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder().serializeNulls().create();
 
         //Building retrofit instance
         retrofit = new Retrofit.Builder()

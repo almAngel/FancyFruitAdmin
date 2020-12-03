@@ -6,36 +6,38 @@ import android.util.Log;
 
 import alm.example.fancyfruitadmin.Pojos.ApiResponse;
 import alm.example.fancyfruitadmin.Pojos.Product;
+import alm.example.fancyfruitadmin.Pojos.Tag;
 import alm.example.fancyfruitadmin.Resources.ProductResource;
+import alm.example.fancyfruitadmin.Resources.TagResource;
 import alm.example.fancyfruitadmin.Utils.Await;
 import alm.example.fancyfruitadmin.Utils.Helper;
 import alm.example.fancyfruitadmin.Utils.JsonLogger;
 import alm.example.fancyfruitadmin.Utils.Resource;
 
-public class ProductProvider implements BaseProvider {
+public class TagProvider implements BaseProvider {
 
     private final Context context;
-    private final Resource<ProductResource> resource;
+    private final Resource<TagResource> resource;
     private final JsonLogger logger;
     private final SharedPreferences sharedPreferences;
 
-    private static final String TAG = ProductProvider.class.getSimpleName();
+    private static final String TAG = TagProvider.class.getSimpleName();
     
-    public ProductProvider(Context context) {
+    public TagProvider(Context context) {
         this.context = context;
-        resource = new Resource<>(ProductResource.class);
+        resource = new Resource<>(TagResource.class);
         logger = new JsonLogger();
         sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
     }
 
     /**
-     *  Funcion para obtener todos los productos disponibles
+     *  Funcion para obtener todas las etiquetas disponibles
      *
-     * @return Product[]
+     * @return Tag[]
      */
-    public Product[] getProducts() {
-        return new Await<Product[]>().get(() -> {
-            Product[] finalResponse = null;
+    public Tag[] getTags() {
+        return new Await<Tag[]>().get(() -> {
+            Tag[] finalResponse = null;
 
             String[] credentials = Helper.getCredentials(context);
 
@@ -51,14 +53,14 @@ public class ProductProvider implements BaseProvider {
                     .body();
 
             // LOG
-            logger.log(finalResponse, "getProducts");
+            logger.log(finalResponse, "getTags");
 
             // FINALLY
             return finalResponse;
         });
     }
 
-    public ApiResponse addProduct(Product product) {
+    public ApiResponse addTag(Tag product) {
         return new Await<ApiResponse>().get(() -> {
             ApiResponse finalResponse = null;
 
@@ -89,13 +91,8 @@ public class ProductProvider implements BaseProvider {
         });
     }
 
-    /**
-     * Función para eliminar un producto desde la API
-     *
-     * @param uuid
-     * @return boolean
-     */
-    public boolean deleteProduct(String uuid) {
+
+    public boolean deleteTag(String uuid) {
         return new Await<Boolean>().get(() -> {
             ApiResponse finalResponse = null;
 
@@ -113,18 +110,13 @@ public class ProductProvider implements BaseProvider {
                     .body();
 
             // LOG
-            logger.log(finalResponse, "deleteProduct");
-
-            Log.e(TAG, finalResponse.toString());
+            logger.log(finalResponse, "deleteTag");
 
             // FINALLY
             if(finalResponse != null) {
                 return finalResponse.getCode() == 200;
             }
-
-
             return false;
         });
     }
-
 }

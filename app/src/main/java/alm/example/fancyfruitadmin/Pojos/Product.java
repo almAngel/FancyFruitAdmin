@@ -18,10 +18,13 @@ public class Product implements Serializable {
     @SerializedName(value = "tags")
     private Tag[] tags;
 
+    public Product() {
+    }
+
     public Product(String uuid, String ref, String name, String slug, Tag[] tags) {
         this.uuid = uuid;
-        this.ref = ref;
         this.name = name;
+        this.ref = ref;
         this.slug = slug;
         this.tags = tags;
     }

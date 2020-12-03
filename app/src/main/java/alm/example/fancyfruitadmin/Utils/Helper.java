@@ -3,15 +3,21 @@ package alm.example.fancyfruitadmin.Utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
+import alm.example.fancyfruitadmin.Activities.LoginActivity;
 import alm.example.fancyfruitadmin.R;
 
 public class Helper {
@@ -20,6 +26,22 @@ public class Helper {
         SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("username", username).apply();
         sharedPreferences.edit().putString("password", password).apply();
+    }
+
+    public static void sessionGuard(FragmentActivity current, Class<? extends AppCompatActivity> redirect) {
+        Arrays.asList(Helper.getCredentials(current)).forEach(c -> {
+            if (c.equalsIgnoreCase("")) {
+                Intent i = new Intent(current, redirect);
+                current.startActivity(i);
+                current.finish();
+            }
+        });
+    }
+
+    public static void logOut(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove("username").apply();
+        sharedPreferences.edit().remove("password").apply();
     }
 
     public static String[] getCredentials(Context context) {

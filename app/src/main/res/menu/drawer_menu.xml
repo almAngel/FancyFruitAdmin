@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Principal" />
+
+    <item android:title="Productos">
+
+        <menu>
+
+            <group android:checkableBehavior="none">
+
+                <item
+                    android:id="@+id/nav_product_list"
+                    android:icon="@drawable/ic_baseline_list_24"
+                    android:title="Lista de productos" />
+
+                <item
+                    android:id="@+id/nav_product_add"
+                    android:icon="@drawable/ic_baseline_add_24"
+                    android:title="Añadir producto" />
+
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="Tags">
+
+        <menu>
+
+            <group android:checkableBehavior="none">
+
+                <item
+                    android:id="@+id/nav_tag_list"
+                    android:icon="@drawable/ic_baseline_list_24"
+                    android:title="Lista de tags" />
+
+                <item
+                    android:id="@+id/nav_tag_add"
+                    android:icon="@drawable/ic_baseline_add_24"
+                    android:title="Añadir tag" />
+
+            </group>
+        </menu>
+
+    </item>
+</menu>
+

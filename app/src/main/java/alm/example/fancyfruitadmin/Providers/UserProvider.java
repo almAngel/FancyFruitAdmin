@@ -27,7 +27,7 @@ public class UserProvider implements BaseProvider {
     }
 
     public User getByEmail(String email) {
-        return new Await<User>().get(resource, () -> {
+        return new Await<User>().get(() -> {
             User finalResponse = null;
 
             // HACEMOS LLAMADA A RECURSO Y DEVOLVEMOS EL ELEMENTO DESEADO (validacion_imeiResponse)

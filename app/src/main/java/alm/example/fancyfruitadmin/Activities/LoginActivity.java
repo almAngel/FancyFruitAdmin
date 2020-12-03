@@ -2,46 +2,27 @@ package alm.example.fancyfruitadmin.Activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.icu.text.UnicodeSetIterator;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
-import java.lang.reflect.Executable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import alm.example.fancyfruitadmin.Pojos.Product;
 import alm.example.fancyfruitadmin.Pojos.User;
-import alm.example.fancyfruitadmin.Providers.ProductProvider;
+import alm.example.fancyfruitadmin.Providers.AuthProvider;
 import alm.example.fancyfruitadmin.Providers.UserProvider;
 import alm.example.fancyfruitadmin.R;
 import alm.example.fancyfruitadmin.Utils.Helper;
@@ -54,6 +35,7 @@ public class LoginActivity extends BaseActivity {
     private FirebaseAuth auth;
     private LoginActivityBinding binding;
     private UserProvider userProvider;
+    private AuthProvider authProvider;
     private SignInButton signInButton;
     private GoogleSignInClient googleSignInClient;
 
@@ -89,6 +71,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onInitializeVariables() {
         userProvider = new UserProvider(this);
+        authProvider = new AuthProvider(this);
     }
 
     private void signIn(View view) {
@@ -127,36 +110,49 @@ public class LoginActivity extends BaseActivity {
                 User user = userProvider.getByEmail(account.getEmail());
 
                 Helper.showMessageAlert(
-                    "Aviso",
-                    "Para iniciar sesión con Google tenemos que saber la contraseña que " +
-                            "tienes asignada dentro de la consola de administración",
-                    this,
-                    () -> {
-                        Helper.showInputAlert(
-                                "Introduce contraseña",
-                                this,
-                                binding.getRoot(),
-                                s -> {
-                                    // GUARDAMOS LAS CREDENCIALES DE MI USUARIO PARA LA API
-                                    Helper.storeCredentials(this, user.getUsername(), s.trim());
-                                    startActivity(
-                                            new Intent(this, MainActivity.class)
-                                    );
-                                    finish();
-                                    dialog.cancel();
-                                    return null;
-                                }
-                        );
-                        dialog.cancel();
-                        return null;
-                    });
-        } catch(ApiException e){
-            // Google Sign In failed, update UI appropriately
-            Log.w(TAG, "Google sign in failed", e);
-        }
-    }
+                        "Aviso",
+                        "Para iniciar sesión con Google tenemos que saber la contraseña que " +
+                                "tienes asignada dentro de la consola de administración",
+                        this,
+                        () -> {
 
-}
+                            Helper.showInputAlert(
+                                    "Introduce contraseña",
+                                    this,
+                                    binding.getRoot(),
+                                    s -> {
+
+                                        boolean isValid = authProvider.validatePassword(s.trim(), user.getPassword());
+
+                                        if (isValid) {
+                                            // GUARDAMOS LAS CREDENCIALES DE MI USUARIO PARA LA API
+                                            Helper.storeCredentials(this, user.getUsername(), s.trim());
+                                            startActivity(
+                                                    new Intent(this, MainActivity.class)
+                                            );
+                                            finish();
+                                        } else {
+                                            Snackbar.make(
+                                                    binding.getRoot(),
+                                                    "La contraseña introducida no se corresponde con tus credenciales de registro",
+                                                    BaseTransientBottomBar.LENGTH_LONG
+                                            ).show();
+                                        }
+                                        dialog.cancel();
+                                        return null;
+                                    }
+                            );
+                            dialog.cancel();
+                            return null;
+                        });
+
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+
+    }
 
     /*
     private void firebaseAuthWithGoogle(String idToken) {

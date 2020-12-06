@@ -99,6 +99,7 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
             holder.setItemName(i.getName());
             holder.setItemRef(i.getRef());
             holder.setItemSlug(i.getSlug());
+            holder.setItemQuantity(i.getQuantity()+"");
         } else {
             Tag i = (Tag) itemList.get(position);
             holder.itemClass = Tag.class;
@@ -115,13 +116,14 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
         protected Class<?> itemClass;
         private String uuid;
         private int position;
-        private TextView itemName, itemRef, itemSlug;
+        private TextView itemName, itemRef, itemSlug, itemQuantity;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemName = binding.itemName;
             this.itemRef = binding.itemReference;
             this.itemSlug = binding.itemSlug;
+            this.itemQuantity = binding.itemQuantity;
 
             itemView.setOnCreateContextMenuListener(this);
 
@@ -159,6 +161,13 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
             this.itemSlug.setText(itemSlug);
         }
 
+        public TextView getItemQuantity() {
+            return itemQuantity;
+        }
+
+        public void setItemQuantity(String itemQuantity) {
+            this.itemQuantity.setText(itemQuantity);
+        }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

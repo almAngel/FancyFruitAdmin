@@ -3,12 +3,14 @@ package alm.example.fancyfruitadmin.Activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -20,6 +22,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
 import alm.example.fancyfruitadmin.Activities.CustomViews.ItemAdapter;
@@ -31,10 +34,14 @@ import alm.example.fancyfruitadmin.Pojos.Tag;
 import alm.example.fancyfruitadmin.Providers.ProductProvider;
 import alm.example.fancyfruitadmin.Providers.TagProvider;
 import alm.example.fancyfruitadmin.R;
+import alm.example.fancyfruitadmin.Services.LocationService;
 import alm.example.fancyfruitadmin.Utils.Helper;
+import alm.example.fancyfruitadmin.Utils.Listeners.ConnectivityChangesListener;
+import alm.example.fancyfruitadmin.Utils.Listeners.ConnectivityChangesNotifier;
 import alm.example.fancyfruitadmin.databinding.MainActivityBinding;
 
-public class MainActivity extends BaseActivity {
+
+public class MainActivity extends BaseActivity implements ConnectivityChangesListener {
 
     private MainActivityBinding binding;
 
@@ -50,12 +57,28 @@ public class MainActivity extends BaseActivity {
     private DrawerLayout drawerLayout;
     private NavigationView drawerNavigationView;
     private View drawerHeader;
+    private boolean hasConnectivity;
+
+    private Intent locationService;
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+        // GET PERMISSIONS
+        String[] strings = Helper.getPermissions(this);
+        if (strings.length > 0) {
+            ActivityCompat.requestPermissions(this, strings, 0);
+        }
+
+        hasConnectivity = Helper.checkInternet(this);
+        ConnectivityChangesNotifier.addListener(this);
+        ConnectivityChangesNotifier.checkChanges(this);
+        if (!hasConnectivity) noConnection();
+
+        super.onCreate(savedInstanceState); // Ejecutar ocultos
+
         Helper.sessionGuard(this, LoginActivity.class);
 
         selectActiveFragment();
@@ -73,7 +96,23 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onServiceInit() {
+        locationService = new Intent(this, LocationService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(locationService);
+        } else {
+            startService(locationService);
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        hasConnectivity = Helper.checkInternet(this);
     }
 
     @Override
@@ -152,6 +191,18 @@ public class MainActivity extends BaseActivity {
                     activeFragment = tagFragment;
                     drawerLayout.closeDrawers();
                     return true;
+
+                case R.id.nav_tag_add:
+                    Intent i = new Intent(this, AddTagActivity.class);
+                    startActivity(i);
+                    drawerLayout.closeDrawers();
+                    return true;
+
+                case R.id.nav_product_add:
+                    Intent j = new Intent(this, AddProductActivity.class);
+                    startActivity(j);
+                    drawerLayout.closeDrawers();
+                    return true;
             }
 
             return false;
@@ -191,7 +242,19 @@ public class MainActivity extends BaseActivity {
         Helper.sessionGuard(this, LoginActivity.class);
     }
 
+    private void noConnection() {
 
+        Helper.showMessageAlert("Aviso", "No se dispone de conexión a internet. Cerrando aplicación", this, false, () -> {
+            logOut();
 
+            return null;
+        });
 
+    }
+
+    @Override
+    public void onConnectivityChanges(boolean hasConnectivity) {
+        this.hasConnectivity = hasConnectivity;
+        if (!hasConnectivity) noConnection();
+    }
 }

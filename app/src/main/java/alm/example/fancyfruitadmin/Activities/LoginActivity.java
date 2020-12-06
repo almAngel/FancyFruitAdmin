@@ -1,6 +1,8 @@
 package alm.example.fancyfruitadmin.Activities;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,10 +27,13 @@ import alm.example.fancyfruitadmin.Pojos.User;
 import alm.example.fancyfruitadmin.Providers.AuthProvider;
 import alm.example.fancyfruitadmin.Providers.UserProvider;
 import alm.example.fancyfruitadmin.R;
+import alm.example.fancyfruitadmin.Services.LocationService;
 import alm.example.fancyfruitadmin.Utils.Helper;
+import alm.example.fancyfruitadmin.Utils.Listeners.ConnectivityChangesListener;
+import alm.example.fancyfruitadmin.Utils.Listeners.ConnectivityChangesNotifier;
 import alm.example.fancyfruitadmin.databinding.LoginActivityBinding;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ConnectivityChangesListener {
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -38,13 +43,25 @@ public class LoginActivity extends BaseActivity {
     private AuthProvider authProvider;
     private SignInButton signInButton;
     private GoogleSignInClient googleSignInClient;
+    private boolean hasConnectivity = Helper.checkInternet(this);
 
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+        hasConnectivity = Helper.checkInternet(this);
+        ConnectivityChangesNotifier.addListener(this);
+        ConnectivityChangesNotifier.checkChanges(this);
+
         super.onCreate(savedInstanceState);
         addEventListeners();
+
+        // PARAR SERVICIO DE LOCALIZACION
+        if(isMyServiceRunning(LocationService.class)) {
+            Intent locationService = new Intent(this, LocationService.class);
+            stopService(locationService);
+        }
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -70,14 +87,30 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        hasConnectivity = Helper.checkInternet(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hasConnectivity = Helper.checkInternet(this);
+    }
+
+    @Override
     protected void onInitializeVariables() {
         userProvider = new UserProvider(this);
         authProvider = new AuthProvider(this);
     }
 
     private void signIn(View view) {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        if(hasConnectivity) {
+            Intent signInIntent = googleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        } else {
+            Snackbar.make(view, "No hay conexión a internet", BaseTransientBottomBar.LENGTH_LONG).show();
+        }
     }
 
     private void signOut() {
@@ -128,7 +161,7 @@ public class LoginActivity extends BaseActivity {
 
                                         if (isValid) {
                                             // GUARDAMOS LAS CREDENCIALES DE MI USUARIO PARA LA API
-                                            Helper.storeCredentials(this, user.getUsername(), s.trim());
+                                            Helper.storeCredentials(this, user.getUuid(), user.getUsername(), s.trim());
                                             startActivity(
                                                     new Intent(this, MainActivity.class)
                                             );
@@ -179,4 +212,25 @@ public class LoginActivity extends BaseActivity {
         binding.googleSignInButton.setOnClickListener(this::signIn);
     }
 
+    private void noConnection() {
+        if(getWindow().getDecorView().isShown()) {
+            Helper.showMessageAlert("Aviso", "No se dispone de conexión a internet", this);
+        }
+    }
+
+    @Override
+    public void onConnectivityChanges(boolean hasConnectivity) {
+        this.hasConnectivity = hasConnectivity;
+        if (!hasConnectivity) noConnection();
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

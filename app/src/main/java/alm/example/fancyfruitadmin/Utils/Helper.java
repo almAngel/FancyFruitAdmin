@@ -1,18 +1,23 @@
 package alm.example.fancyfruitadmin.Utils;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
@@ -22,9 +27,10 @@ import alm.example.fancyfruitadmin.R;
 
 public class Helper {
 
-    public static void storeCredentials(Context context, String username, String password) {
+    public static void storeCredentials(Context context, String uuid, String username, String password) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
         sharedPreferences.edit().putString("username", username).apply();
+        sharedPreferences.edit().putString("uuid", uuid).apply();
         sharedPreferences.edit().putString("password", password).apply();
     }
 
@@ -41,6 +47,7 @@ public class Helper {
     public static void logOut(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
         sharedPreferences.edit().remove("username").apply();
+        sharedPreferences.edit().remove("uuid").apply();
         sharedPreferences.edit().remove("password").apply();
     }
 
@@ -48,7 +55,8 @@ public class Helper {
         SharedPreferences sharedPreferences = context.getSharedPreferences("auth", Context.MODE_PRIVATE);
         return new String[]{
                 sharedPreferences.getString("username", ""),
-                sharedPreferences.getString("password", "")
+                sharedPreferences.getString("password", ""),
+                sharedPreferences.getString("uuid", "")
         };
     }
 
@@ -120,4 +128,46 @@ public class Helper {
         return builder;
     }
 
+    public static boolean getLocationPermission(Context context) {
+        boolean result = true;
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            result = false;
+        }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            result = false;
+        }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            result = false;
+        }
+        return result;
+    }
+
+    public static String[] getPermissions(Context context){
+        ArrayList<String> list=new ArrayList<>();
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            list.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            list.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            list.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        String[] strings = new String[list.size()];
+        strings = list.toArray(strings);
+        return strings;
+    }
+
+    public static boolean checkInternet(Context context) {
+        try {
+            ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            return wifi.isConnected() || mobile.isConnected();
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

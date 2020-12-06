@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 public interface ProductResource {
 
-    @GET("/product")
+    @GET("/product/all")
     Call<Product[]> getAll();
 
     @GET("/product/{id}")

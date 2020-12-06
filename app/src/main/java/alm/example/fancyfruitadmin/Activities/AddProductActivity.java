@@ -36,6 +36,7 @@ public class AddProductActivity extends BaseActivity {
             add("");
             add("");
             add("");
+            add("");
         }
     };
 
@@ -138,6 +139,22 @@ public class AddProductActivity extends BaseActivity {
 
             }
         });
+
+        binding.productQuantityInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                inputValues.set(3, s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void onSubmitProduct() {
@@ -148,6 +165,7 @@ public class AddProductActivity extends BaseActivity {
                             inputValues.get(2),
                             inputValues.get(0),
                             inputValues.get(1),
+                            Integer.parseInt(inputValues.get(3)),
                             productTags
                     )
             );

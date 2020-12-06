@@ -38,6 +38,7 @@ public class EditProductActivity extends BaseActivity {
             add(""); // Nombre
             add(""); // Slug
             add(""); // Referencia
+            add(""); // Cantidad
         }
     };
 
@@ -57,6 +58,7 @@ public class EditProductActivity extends BaseActivity {
         inputValues.set(0, currentProduct.getName());
         inputValues.set(1, currentProduct.getSlug());
         inputValues.set(2, currentProduct.getRef());
+        inputValues.set(3, currentProduct.getQuantity() + "");
         productTags = currentProduct.getTags();
 
         setEventListeners();
@@ -158,6 +160,25 @@ public class EditProductActivity extends BaseActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        binding.productQuantityInput.setText(inputValues.get(3));
+        binding.productQuantityInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (binding.productQuantityInput.hasFocus()) {
+                    inputValues.set(3, s.toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void onSubmitProduct() {
@@ -169,6 +190,7 @@ public class EditProductActivity extends BaseActivity {
                             inputValues.get(2),
                             inputValues.get(0),
                             inputValues.get(1),
+                            Integer.parseInt(inputValues.get(3)),
                             productTags
                     )
             );

@@ -66,12 +66,12 @@ public class Helper {
         alertDialog.show();
     }
 
-    public static void showMessageAlert(String title, String text, Context context, Callable<Void> callback) {
+    public static void showMessageAlert(String title, String text, Context context, boolean cancelable, Callable<Void> callback) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         AlertDialog alertDialog = null;
         builder.setTitle(title);
         builder.setMessage(text);
-        builder.setCancelable(false);
+        builder.setCancelable(cancelable);
 
         builder.setPositiveButton("Aceptar", (dialog, id) -> {
             dialog.dismiss();
@@ -90,7 +90,7 @@ public class Helper {
         builder.setTitle(title);
 
         View viewInflated = LayoutInflater.from(context).inflate(R.layout.input_alert, viewGroup, false);
-        final EditText input = (EditText) viewInflated.findViewById(R.id.innerInput);
+        final EditText input = viewInflated.findViewById(R.id.innerInput);
 
         builder.setView(viewInflated);
 

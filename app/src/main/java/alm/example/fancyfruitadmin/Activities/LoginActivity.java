@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity {
 
         auth = FirebaseAuth.getInstance();
 
+        signOut();
     }
 
     @Override
@@ -114,6 +115,7 @@ public class LoginActivity extends BaseActivity {
                         "Para iniciar sesión con Google tenemos que saber la contraseña que " +
                                 "tienes asignada dentro de la consola de administración",
                         this,
+                        false,
                         () -> {
 
                             Helper.showInputAlert(

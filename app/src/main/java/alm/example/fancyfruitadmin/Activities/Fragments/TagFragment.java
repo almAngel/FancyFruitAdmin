@@ -1,5 +1,6 @@
 package alm.example.fancyfruitadmin.Activities.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,15 +15,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Executors;
 
+import alm.example.fancyfruitadmin.Activities.AddProductActivity;
+import alm.example.fancyfruitadmin.Activities.AddTagActivity;
 import alm.example.fancyfruitadmin.Activities.CustomViews.ItemAdapter;
-import alm.example.fancyfruitadmin.Pojos.Product;
 import alm.example.fancyfruitadmin.Pojos.Tag;
-import alm.example.fancyfruitadmin.Providers.ProductProvider;
 import alm.example.fancyfruitadmin.Providers.TagProvider;
+import alm.example.fancyfruitadmin.R;
+import alm.example.fancyfruitadmin.databinding.MainActivityBinding;
 import alm.example.fancyfruitadmin.databinding.TagFragmentBinding;
 
 public class TagFragment extends BaseFragment {
 
+    MainActivityBinding parentBinding;
     TagFragmentBinding binding;
 
     private ItemAdapter<Tag> tagItemAdapter;
@@ -42,13 +46,7 @@ public class TagFragment extends BaseFragment {
 
         setEventListeners();
 
-        Executors.newFixedThreadPool(2).execute(() -> {
-            tagCollection = new ArrayList<>(
-                    Arrays.asList(tagProvider.getTags())
-            );
-
-            getActivity().runOnUiThread(() -> tagItemAdapter.setCollection(tagCollection));
-        });
+        refreshEverything();
 
         binding.itemList.setLayoutManager(layoutManager);
         binding.itemList.setAdapter(tagItemAdapter);
@@ -59,6 +57,13 @@ public class TagFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+
+        refreshEverything();
+        super.onResume();
     }
 
     @Override
@@ -81,6 +86,7 @@ public class TagFragment extends BaseFragment {
 
     private void setEventListeners() {
         onSwipeDown();
+        onEfabClick();
     }
 
     private void onSwipeDown() {
@@ -103,5 +109,26 @@ public class TagFragment extends BaseFragment {
 
     }
 
+    private void onEfabClick() {
+        binding.efabAddTag.setOnClickListener(v -> {
+            Intent i = new Intent(getContext(), AddTagActivity.class);
+            startActivity(i);
+        });
+    }
+
+    private void refreshEverything() {
+        binding.swiper.setRefreshing(true);
+        Executors.newFixedThreadPool(2).execute(() -> {
+            tagCollection = new ArrayList<>(
+                    Arrays.asList(tagProvider.getTags())
+            );
+
+            getActivity().runOnUiThread(() -> {
+                tagItemAdapter.setCollection(tagCollection);
+
+                binding.swiper.setRefreshing(false);
+            });
+        });
+    }
 
 }

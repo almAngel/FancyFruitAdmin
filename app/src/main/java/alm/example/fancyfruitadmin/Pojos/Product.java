@@ -29,6 +29,13 @@ public class Product implements Serializable {
         this.tags = tags;
     }
 
+    public Product(String ref, String name, String slug, Tag[] tags) {
+        this.name = name;
+        this.ref = ref;
+        this.slug = slug;
+        this.tags = tags;
+    }
+
     public String getUuid() {
         return uuid;
     }

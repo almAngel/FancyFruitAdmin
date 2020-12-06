@@ -11,6 +11,13 @@ public class Tag implements Serializable {
     @SerializedName(value = "name")
     private String name;
 
+    public Tag() {
+    }
+
+    public Tag(String name) {
+        this.name = name;
+    }
+
     public Tag(String uuid, String name) {
         this.uuid = uuid;
         this.name = name;

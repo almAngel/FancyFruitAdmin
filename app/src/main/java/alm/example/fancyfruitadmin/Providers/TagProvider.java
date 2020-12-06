@@ -60,7 +60,7 @@ public class TagProvider implements BaseProvider {
         });
     }
 
-    public ApiResponse addTag(Tag product) {
+    public ApiResponse addTag(Tag tag) {
         return new Await<ApiResponse>().get(() -> {
             ApiResponse finalResponse = null;
 
@@ -73,14 +73,12 @@ public class TagProvider implements BaseProvider {
                             credentials[0],
                             credentials[1]
                     )
-                    .add(product)
+                    .add(tag)
                     .execute()
                     .body();
 
             // LOG
             logger.log(finalResponse, "addProduct");
-
-            Log.e(TAG, finalResponse.toString());
 
             // FINALLY
             if(finalResponse != null) {

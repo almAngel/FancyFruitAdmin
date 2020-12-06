@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -26,6 +25,7 @@
                 app:titleTextColor="@color/white">
 
             </com.google.android.material.appbar.MaterialToolbar>
+
         </com.google.android.material.appbar.AppBarLayout>
 
     </LinearLayout>
@@ -39,37 +39,80 @@
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Añadir un "
+            android:layout_marginBottom="8dp"
+            android:text="Editar un producto"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/item_name"
+            android:id="@+id/product_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Nombre">
+            android:hint="Nombre"
+            app:placeholderText="Mango Irwin">
 
             <com.google.android.material.textfield.TextInputEditText
-
+                android:id="@+id/product_nameInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/item_ref"
+            android:id="@+id/product_slug"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:hint="Slug">
+            android:hint="Slug"
+            app:placeholderText="mango-irwin">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/product_slugInput"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/product_ref"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Referencia"
+            app:placeholderText="0000001N">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/product_refInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_addProducTags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="16dp"
+                android:text="Añadir Etiquetas" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_addProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="16dp"
+                android:text="Guardar" />
+        </RelativeLayout>
+
+
 
     </LinearLayout>
 

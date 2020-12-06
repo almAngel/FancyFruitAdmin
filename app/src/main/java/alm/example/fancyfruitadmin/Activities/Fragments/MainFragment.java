@@ -10,13 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.MaterialToolbar;
+
 import alm.example.fancyfruitadmin.Activities.LoginActivity;
 import alm.example.fancyfruitadmin.R;
 import alm.example.fancyfruitadmin.Utils.Helper;
+import alm.example.fancyfruitadmin.databinding.MainActivityBinding;
 import alm.example.fancyfruitadmin.databinding.MainFragmentBinding;
 
 public class MainFragment extends BaseFragment {
 
+    MainActivityBinding parentBinding;
     MainFragmentBinding binding;
 
     private ProductFragment productFragment;
@@ -38,6 +43,7 @@ public class MainFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = MainFragmentBinding.inflate(inflater, container, false);
+
 
         setEventListeners();
 
@@ -80,7 +86,12 @@ public class MainFragment extends BaseFragment {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                     show(productFragment).
                     commit();
+
+            MaterialToolbar appBar = getActivity().findViewById(R.id.topBar);
+            appBar.getMenu().clear();
+            appBar.inflateMenu(R.menu.topbar_productmenu);
         });
+
     }
 
     private void onTagListButton() {
@@ -90,6 +101,11 @@ public class MainFragment extends BaseFragment {
                     setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                     show(tagFragment).
                     commit();
+
+            MaterialToolbar appBar = getActivity().findViewById(R.id.topBar);
+            appBar.getMenu().clear();
+            appBar.inflateMenu(R.menu.topbar_menu);
+
         });
     }
 }

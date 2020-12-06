@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/drawer_layout"
+        android:id="@+id/d_layout"
         layout="@layout/drawer_layout" />
 
 </LinearLayout>

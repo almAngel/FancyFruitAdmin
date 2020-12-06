@@ -1,40 +1,32 @@
 package alm.example.fancyfruitadmin.Activities.CustomViews;
 
+import android.app.Activity;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
+import android.content.Intent;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-import alm.example.fancyfruitadmin.Pojos.Item;
+import alm.example.fancyfruitadmin.Activities.EditProductActivity;
 import alm.example.fancyfruitadmin.Pojos.Product;
 import alm.example.fancyfruitadmin.Pojos.Tag;
 import alm.example.fancyfruitadmin.Providers.ProductProvider;
 import alm.example.fancyfruitadmin.Providers.TagProvider;
-import alm.example.fancyfruitadmin.R;
 import alm.example.fancyfruitadmin.Utils.Helper;
 import alm.example.fancyfruitadmin.databinding.ItemViewholderBinding;
 
@@ -170,17 +162,37 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuItem Edit = menu.add(Menu.NONE, 1, 1, "Edit");
-            MenuItem Delete = menu.add(Menu.NONE, 2, 2, "Delete");
-            Edit.setOnMenuItemClickListener(onContextMenu);
-            Delete.setOnMenuItemClickListener(onContextMenu);
+            if (itemClass == Product.class) {
+                MenuItem edit = menu.add(Menu.NONE, 1, 1, "Editar");
+                edit.setOnMenuItemClickListener(onContextMenu);
+            }
+
+            MenuItem delete = menu.add(Menu.NONE, 2, 2, "Eliminar");
+            delete.setOnMenuItemClickListener(onContextMenu);
         }
 
         private final MenuItem.OnMenuItemClickListener onContextMenu = item -> {
 
             switch (item.getItemId()) {
                 case 1:
+                    itemView.post(() -> {
+                        Helper.showMessageAlert(
+                                "Aviso",
+                                "¿Seguro que deseas editar este producto?",
+                                itemView.getContext(),
+                                true,
 
+                                // NUEVO THREAD PARA DELEGAR TRABAJO
+                                () -> {
+                                    Activity activity = ((Activity) itemView.getContext());
+                                    Intent i = new Intent(activity, EditProductActivity.class);
+                                    i.putExtra("UUID", uuid);
+                                    activity.startActivity(i);
+
+                                    return null;
+                                }
+                        );
+                    });
                     break;
 
                 case 2:
@@ -191,6 +203,7 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
                                 "Aviso",
                                 "¿Seguro que quieres borrar este item?",
                                 itemView.getContext(),
+                                true,
 
                                 // NUEVO THREAD PARA DELEGAR TRABAJO
                                 () -> {

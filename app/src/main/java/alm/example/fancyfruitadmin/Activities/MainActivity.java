@@ -1,7 +1,11 @@
 package alm.example.fancyfruitadmin.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -23,7 +27,9 @@ import alm.example.fancyfruitadmin.Activities.Fragments.MainFragment;
 import alm.example.fancyfruitadmin.Activities.Fragments.ProductFragment;
 import alm.example.fancyfruitadmin.Activities.Fragments.TagFragment;
 import alm.example.fancyfruitadmin.Pojos.Product;
+import alm.example.fancyfruitadmin.Pojos.Tag;
 import alm.example.fancyfruitadmin.Providers.ProductProvider;
+import alm.example.fancyfruitadmin.Providers.TagProvider;
 import alm.example.fancyfruitadmin.R;
 import alm.example.fancyfruitadmin.Utils.Helper;
 import alm.example.fancyfruitadmin.databinding.MainActivityBinding;
@@ -76,8 +82,8 @@ public class MainActivity extends BaseActivity {
         productFragment = new ProductFragment();
         tagFragment = new TagFragment();
 
-        drawerLayout = binding.drawerLayout.drawerLayout;
-        drawerNavigationView = binding.drawerLayout.drawerNavigationView;
+        drawerLayout = binding.dLayout.drawerLayout;
+        drawerNavigationView = binding.dLayout.drawerNavigationView;
     }
 
     private void setEventListeners() {
@@ -109,6 +115,10 @@ public class MainActivity extends BaseActivity {
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                             show(mainFragment).
                             commit();
+
+                    binding.topBar.getMenu().clear();
+                    binding.topBar.inflateMenu(R.menu.topbar_menu);
+
                     activeFragment = mainFragment;
                     drawerLayout.closeDrawers();
                     return true;
@@ -120,6 +130,10 @@ public class MainActivity extends BaseActivity {
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                             show(productFragment).
                             commit();
+
+                    binding.topBar.getMenu().clear();
+                    binding.topBar.inflateMenu(R.menu.topbar_productmenu);
+
                     activeFragment = productFragment;
                     drawerLayout.closeDrawers();
                     return true;
@@ -131,6 +145,10 @@ public class MainActivity extends BaseActivity {
                             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
                             show(tagFragment).
                             commit();
+
+                    binding.topBar.getMenu().clear();
+                    binding.topBar.inflateMenu(R.menu.topbar_menu);
+
                     activeFragment = tagFragment;
                     drawerLayout.closeDrawers();
                     return true;
@@ -141,6 +159,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setBarMenu() {
+
         binding.topBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.logout) {
                 logOut();
@@ -152,8 +171,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setDrawerMenu() {
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawerNavigationView = drawerLayout.findViewById(R.id.drawer_navigationView);
+        drawerLayout = binding.dLayout.drawerLayout;
+        drawerNavigationView = binding.dLayout.drawerNavigationView;
         drawerHeader = drawerNavigationView.getHeaderView(0);
     }
 
@@ -171,5 +190,8 @@ public class MainActivity extends BaseActivity {
         Helper.logOut(this);
         Helper.sessionGuard(this, LoginActivity.class);
     }
+
+
+
 
 }

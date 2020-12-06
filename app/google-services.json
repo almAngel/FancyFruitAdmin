@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "416560231830",
+    "firebase_url": "https://tropicalfancyfruitadmin.firebaseio.com",
+    "project_id": "tropicalfancyfruitadmin",
+    "storage_bucket": "tropicalfancyfruitadmin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416560231830:android:10e3fae7522c917e7759b7",
+        "android_client_info": {
+          "package_name": "alm.example.fancyfruitadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416560231830-3p11au4g3ft4s2n3moa91mk5cvv0uekp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "alm.example.fancyfruitadmin",
+            "certificate_hash": "1d37e8bcda2a86b24fe785a1898f69cfb2cef55e"
+          }
+        },
+        {
+          "client_id": "416560231830-51q2cg2f0i2q7j651ief395o855q6ne6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPTA5f3TiygXYl-hJyUYPp_L8A4NMrwA0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416560231830-51q2cg2f0i2q7j651ief395o855q6ne6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

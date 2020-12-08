@@ -143,44 +143,54 @@ public class LoginActivity extends BaseActivity implements ConnectivityChangesLi
 
                 User user = userProvider.getByEmail(account.getEmail());
 
-                Helper.showMessageAlert(
-                        "Aviso",
-                        "Para iniciar sesión con Google tenemos que saber la contraseña que " +
-                                "tienes asignada dentro de la consola de administración",
-                        this,
-                        false,
-                        () -> {
+                if(user == null) {
+                    Snackbar.make(
+                            binding.getRoot(),
+                            "No se encontró ninguna cuenta registrada con este email. Contacta con soporte para obtener tu cuenta",
+                            BaseTransientBottomBar.LENGTH_INDEFINITE
+                    ).show();
+                    dialog.dismiss();
+                    signOut();
+                } else {
 
-                            Helper.showInputAlert(
-                                    "Introduce contraseña",
-                                    this,
-                                    binding.getRoot(),
-                                    s -> {
+                    Helper.showMessageAlert(
+                            "Aviso",
+                            "Para iniciar sesión con Google tenemos que saber la contraseña que " +
+                                    "tienes asignada dentro de la consola de administración",
+                            this,
+                            false,
+                            () -> {
 
-                                        boolean isValid = authProvider.validatePassword(s.trim(), user.getPassword());
+                                Helper.showInputAlert(
+                                        "Introduce contraseña",
+                                        this,
+                                        binding.getRoot(),
+                                        s -> {
 
-                                        if (isValid) {
-                                            // GUARDAMOS LAS CREDENCIALES DE MI USUARIO PARA LA API
-                                            Helper.storeCredentials(this, user.getUuid(), user.getUsername(), s.trim());
-                                            startActivity(
-                                                    new Intent(this, MainActivity.class)
-                                            );
-                                            finish();
-                                        } else {
-                                            Snackbar.make(
-                                                    binding.getRoot(),
-                                                    "La contraseña introducida no se corresponde con tus credenciales de registro",
-                                                    BaseTransientBottomBar.LENGTH_LONG
-                                            ).show();
+                                            boolean isValid = authProvider.validatePassword(s.trim(), user.getPassword());
+
+                                            if (isValid) {
+                                                // GUARDAMOS LAS CREDENCIALES DE MI USUARIO PARA LA API
+                                                Helper.storeCredentials(this, user.getUuid(), user.getUsername(), s.trim());
+                                                startActivity(
+                                                        new Intent(this, MainActivity.class)
+                                                );
+                                                finish();
+                                            } else {
+                                                Snackbar.make(
+                                                        binding.getRoot(),
+                                                        "La contraseña introducida no se corresponde con tus credenciales de registro",
+                                                        BaseTransientBottomBar.LENGTH_LONG
+                                                ).show();
+                                            }
+                                            dialog.cancel();
+                                            return null;
                                         }
-                                        dialog.cancel();
-                                        return null;
-                                    }
-                            );
-                            dialog.cancel();
-                            return null;
-                        });
-
+                                );
+                                dialog.cancel();
+                                return null;
+                            });
+                }
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
@@ -188,25 +198,6 @@ public class LoginActivity extends BaseActivity implements ConnectivityChangesLi
         }
 
     }
-
-    /*
-    private void firebaseAuthWithGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        auth.signInWithCredential(credential).addOnCompleteListener(this, (OnCompleteListener<AuthResult>) task -> {
-            if (task.isSuccessful()) {
-                // Sign in success, update UI with the signed-in user's information
-                Log.d(TAG, "signInWithCredential: success");
-                FirebaseUser firebaseUser = auth.getCurrentUser();
-
-            } else {
-                // If sign in fails, display a message to the user.
-                Log.w(TAG, "signInWithCredential: failure", task.getException());
-                Snackbar.make(binding.getRoot(), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                //updateUI(null);
-            }
-        });
-    }
-     */
 
     private void addEventListeners() {
         binding.googleSignInButton.setOnClickListener(this::signIn);

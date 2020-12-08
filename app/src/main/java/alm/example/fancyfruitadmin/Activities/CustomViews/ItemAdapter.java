@@ -27,6 +27,7 @@ import alm.example.fancyfruitadmin.Pojos.Product;
 import alm.example.fancyfruitadmin.Pojos.Tag;
 import alm.example.fancyfruitadmin.Providers.ProductProvider;
 import alm.example.fancyfruitadmin.Providers.TagProvider;
+import alm.example.fancyfruitadmin.R;
 import alm.example.fancyfruitadmin.Utils.Helper;
 import alm.example.fancyfruitadmin.databinding.ItemViewholderBinding;
 
@@ -105,6 +106,12 @@ public class ItemAdapter<T> extends RecyclerView.Adapter<ItemAdapter<T>.ItemView
             holder.itemClass = Tag.class;
             holder.setUuid(i.getUuid());
             holder.setItemName(i.getName());
+
+            holder.itemRef.setVisibility(View.INVISIBLE);
+            holder.itemSlug.setVisibility(View.INVISIBLE);
+            holder.itemQuantity.setVisibility(View.INVISIBLE);
+            holder.itemView.findViewById(R.id.quantityX).setVisibility(View.INVISIBLE);
+            holder.itemView.findViewById(R.id.refis).setVisibility(View.INVISIBLE);
         }
 
         holder.setItemPosition(position);

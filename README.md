@@ -29,3 +29,7 @@ Si por algún motivo la app no funciona en su terminal o necesita que le habilit
 - Nombre y primer apellido
 - Nombre de usuario
 - Email creado con extensión Gmail
+
+
+
+Ángel López Molina, 2ºDAM I.E.S Campanillas

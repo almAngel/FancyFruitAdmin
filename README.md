@@ -29,4 +29,4 @@ Si por algún motivo la app no funciona en su terminal o necesita que le habilit
 - Nombre de usuario
 - Nombre
 - Apellido
-- Email creado con Google Gmail
+- Email creado con extensión Gmail

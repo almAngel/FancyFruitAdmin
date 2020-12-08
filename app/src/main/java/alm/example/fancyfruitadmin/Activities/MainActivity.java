@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity implements ConnectivityChangesLis
     // SET UP DRAWER
     private DrawerLayout drawerLayout;
     private NavigationView drawerNavigationView;
+    private MaterialToolbar topBar;
     private View drawerHeader;
     private boolean hasConnectivity;
 
@@ -89,9 +91,10 @@ public class MainActivity extends BaseActivity implements ConnectivityChangesLis
     @Override
     protected void onViewBind() {
         binding = MainActivityBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
 
         setBarMenu();
+
+        setContentView(binding.getRoot());
     }
 
     @Override
@@ -212,8 +215,12 @@ public class MainActivity extends BaseActivity implements ConnectivityChangesLis
     private void setBarMenu() {
 
         binding.topBar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.logout) {
-                logOut();
+            switch(item.getItemId()) {
+                case R.id.logout:
+                    System.out.println("ENTRA");
+                    logOut();
+                    break;
+
             }
             return false;
         });

@@ -152,10 +152,18 @@ public class ProductFragment extends BaseFragment {
         topBar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.filter) {
                 makeMultiSelectDialog();
+            } else if(item.getItemId() == R.id.logout) {
+                logOut();
             }
 
             return false;
         });
+
+    }
+
+    private void logOut() {
+        Helper.logOut(getContext());
+        Helper.sessionGuard(getActivity(), LoginActivity.class);
     }
 
     private void makeMultiSelectDialog() {

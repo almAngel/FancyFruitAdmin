@@ -26,7 +26,6 @@ https://www.dropbox.com/s/wgtbfpcmctyajwf/app-debug.apk?dl=0
 
 Si por algún motivo la app no funciona en su terminal o necesita que le habilitemos una cuenta contáctenos a _jardineriasverdemar@gmail.com_ con la siguiente información:
 
+- Nombre y primer apellido
 - Nombre de usuario
-- Nombre
-- Apellido
 - Email creado con extensión Gmail

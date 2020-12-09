@@ -91,6 +91,8 @@ public final class LocationService extends Service implements BatteryChangesList
 
         stateLogProvider = new StateLogProvider(this);
 
+        log = new StateLog();
+
         refreshLocation();
     }
 
@@ -163,9 +165,10 @@ public final class LocationService extends Service implements BatteryChangesList
             } else {
 
                 LocationRequest locationRequest = LocationRequest.create();
-                locationRequest.setInterval((long) TIME_INTERVALS[0]);
+                locationRequest.setInterval((long) MIN_TIME_UPDATE);
                 locationRequest.setFastestInterval(MIN_TIME_UPDATE);
-                locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
 
                 fusedLocationClient.requestLocationUpdates(
                         locationRequest,
@@ -176,6 +179,8 @@ public final class LocationService extends Service implements BatteryChangesList
                                     return;
                                 }
                                 for (Location location : locationResult.getLocations()) {
+
+                                    Log.e(TAG, "ENTRA" );
                                     currentLocation = new Point(location.getLatitude(), location.getLongitude());
 
                                     prepareLog();
@@ -184,6 +189,7 @@ public final class LocationService extends Service implements BatteryChangesList
                         },
                         Looper.getMainLooper()
                 );
+
             }
 
         }
@@ -198,6 +204,8 @@ public final class LocationService extends Service implements BatteryChangesList
                 currentLocation.getLat() + ", " + currentLocation.getLon(),
                 String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()))
         );
+
+        Log.e(TAG, log.toString() );
 
         stateLogProvider.addNewLog(log);
     }

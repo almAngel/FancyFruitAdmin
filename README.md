@@ -83,6 +83,9 @@ Por el contrario, aparecerá un mensaje genérico indicando que no se ha podido 
 Finalmente, una vez volvamos a la lista de etiquetas, nuestra nueva etiqueta debe aparecer. Podemos eliminar nuestras etiquetas si requerimos de ello, pero no podemos editar. Al ser un campo simplemente se decidió no incluir la funcionalidad en producción. Como alternativa sugerimos que se elimine la etiqueta y se cree una nueva.
 
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_nuevo.png" />
+
+Para eliminar, pulsamos sobre el item durante unos segundos hasta que salga el menú con las opciones.
+
 <div style="display: flex;">
   <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_eliminar.png" />
   <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_eliminar_aviso.png" />
@@ -93,6 +96,73 @@ Finalmente, una vez volvamos a la lista de etiquetas, nuestra nueva etiqueta deb
 
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/formulario_aviso.png" />
 
+8. Creación de productos.
+
+Para crear un producto nos dirigiremos a la pantalla de listado de productos abriendo el menú cajón. El resultado tiene que ser algo parecido a esto:
+
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/productos.png" />
+
+Como con las etiquetas, para crear un nuevo producto pulsaremos el botón de adición de la parte inferior de la pantalla. Nos llevará a esta pantalla, en la que introduciremos los datos requeridos con el formato que se indica en el respectivo placeholder.
+  
+**Formatos**:
+- Nombre: Cualquiera
+- Slug: ejemplo-slug
+- Referencia: 1234567N (XXXXXXXY)
+- Cantidad: n > 0
+
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_a%C3%B1adir.png" />
+
+También tenemos la posibilidad de asignar las etiquetas creadas anteriormente pulsando el botón "Añadir etiquetas".
+
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_tags.png" />
+
+Si los datos son correctos, al guardar aparecerá el siguiente mensaje:
+
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_ok.png" />
+
+Cuando volvamos hacia atrás, nuestro producto debería estar en la lista.
+
+Ahora podremos editar nuestro producto o eliminarlo como explicamos anteriormente para las etiquetas.
+
+9. Para editar o eliminar, pulsamos sobre el item durante unos segundos hasta que salga el menú con las opciones.
+
+**Editar**: 
+
+<div style="display: flex;">
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_opciones.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_editar_aviso.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_editar.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_editar_ok.png" />
+</div>
+
+<br></br>
+**Eliminar**: 
+
+<div style="display: flex;">
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_opciones.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_eliminar_aviso.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/producto_eliminar_ok.png" />
+</div>
+
+10. También podremos filtrar nuestros productos gracias al botón de filtrado de la barra superior y las etiquetas. Simplemente pulsaremos el botón y aparecerá el siguiente diálogo:
+
+<img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/productos_filtrar.png" />
+
+Seleccionamos las etiquetas que requiramos y pulsaremos seleccionar. El servidor nos devolverá sólamente productos que contengan las etiquetas mencionadas.
+
+## Se ha perdido la conexión a internet:
+
+En caso de que el dispositivo pierda la conexión a internet, la aplicación cerrará sesión y llevará al usuario a la pantalla de login nuevamente:
+
+<div style="display: flex;">
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/conexion_off_3.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/conexion_off_2.png" />
+  <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/conexion_off.png" />
+</div>
+
+## Tengo conexión, pero aún así la app ha crasheado al intentar crear una etiqueta o un producto:
+
+Puede ser que por la funcionalidad de suspensión del servidor Heroku la app no responda a la hora de crear el item, pero una vez hagamos el intento el servidor despertará y la próxima vez que iniciemos sesión y lo intentemos podremos crearlo nuevamente.
 
 ## Por algún motivo no puedo utilizarla:
 
@@ -101,7 +171,6 @@ Si por algún motivo la app no funciona en su terminal o necesita que le habilit
 - Nombre y primer apellido
 - Nombre de usuario
 - Email creado con extensión Gmail
-
 
 
 Ángel López Molina, 2ºDAM I.E.S Campanillas

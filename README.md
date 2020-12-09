@@ -176,6 +176,7 @@ Si por algún motivo la app no funciona en su terminal o necesita que le habilit
 - Nombre de usuario
 - Email creado con extensión Gmail
 
-# VIDEO: https://www.youtube.com/watch?v=X3MldwQH2Ig
+# VIDEO:
+[![VIDEO](http://i3.ytimg.com/vi/X3MldwQH2Ig/hqdefault.jpg)](https://www.youtube.com/watch?v=X3MldwQH2Ig)
 
 Ángel López Molina, 2ºDAM I.E.S Campanillas

@@ -177,4 +177,8 @@ Si por algún motivo la app no funciona en su terminal o necesita que le habilit
 - Email creado con extensión Gmail
 
 
+# VIDEO:
+
+![Video](https://www.youtube.com/watch?v=X3MldwQH2Ig)
+
 Ángel López Molina, 2ºDAM I.E.S Campanillas

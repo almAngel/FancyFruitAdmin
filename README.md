@@ -1,6 +1,18 @@
 # FancyFruitAdmin
 
-![TFFADMINICON](https://coraa776fff39610ff48570b1b890.herokuapp.com/assets/logo.svg)
+<br/>
+<br/>
+<br/>
+
+<p align="center">
+  <img src="https://coraa776fff39610ff48570b1b890.herokuapp.com/assets/logo.svg" />
+</p>
+
+<br/>
+<br/>
+<br/>
+
+
 
 Bienvenido al repositorio oficial de la app de administración de Tropical Fancy Fruit.
 

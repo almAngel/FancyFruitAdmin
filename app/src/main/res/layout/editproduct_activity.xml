@@ -56,6 +56,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/product_nameInput"
                 android:layout_width="match_parent"
+                android:maxLines="1"
+                android:inputType="text"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,6 +73,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/product_slugInput"
                 android:layout_width="match_parent"
+                android:maxLines="1"
+                android:inputType="text"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,6 +90,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/product_refInput"
                 android:layout_width="match_parent"
+                android:maxLines="1"
+                android:inputType="text"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -102,6 +108,7 @@
                 android:id="@+id/product_quantityInput"
                 android:layout_width="match_parent"
                 android:inputType="number"
+                android:maxLines="1"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 

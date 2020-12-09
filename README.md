@@ -150,6 +150,10 @@ Ahora podremos editar nuestro producto o eliminarlo como explicamos anteriorment
 
 Seleccionamos las etiquetas que requiramos y pulsaremos seleccionar. El servidor nos devolverá sólamente productos que contengan las etiquetas mencionadas.
 
+## Diagrama de base de datos: 
+
+<img style="margin: auto" width=640 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/db_diagram.png" />
+
 ## Se ha perdido la conexión a internet:
 
 En caso de que el dispositivo pierda la conexión a internet, la aplicación cerrará sesión y llevará al usuario a la pantalla de login nuevamente:

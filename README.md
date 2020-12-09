@@ -75,7 +75,7 @@ Aquí nos damos cuenta de varias cosas. Tenemos dos botones nuevos en la barra s
 
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_añadir.png" />
 
-Si la operación se ha completado con éxito aparecerá el siguiente mensaje: </br>
+Si la operación se ha completado con éxito aparecerá el siguiente mensaje: <br></br>
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_ok.png" />
 
 Por el contrario, aparecerá un mensaje genérico indicando que no se ha podido completar con éxito.

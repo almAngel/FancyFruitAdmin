@@ -160,9 +160,7 @@ En caso de que el dispositivo pierda la conexión a internet, la aplicación cer
   <img style="margin: auto" height=480 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/conexion_off.png" />
 </div>
 
-## Se ha perdido la conexión a internet:
-
-> Tengo conexión, pero aún así la app ha crasheado al intentar crear una etiqueta o un producto.
+## Tengo conexión, pero aún así la app ha crasheado al intentar crear una etiqueta o un producto:
 
 Puede ser que por la funcionalidad de suspensión del servidor Heroku la app no responda a la hora de crear el item, pero una vez hagamos el intento el servidor despertará y la próxima vez que iniciemos sesión y lo intentemos podremos crearlo nuevamente.
 

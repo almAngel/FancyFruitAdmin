@@ -12,6 +12,11 @@
 <br/>
 <br/>
 
+## ENLACE A PÁGINA DE PRESENTACIÓN Y API PUBLICA
+https://coraa776fff39610ff48570b1b890.herokuapp.com/
+
+## ENLACE AL REPOSITORIO DEL BACKEND
+https://github.com/almAngel/coraa776fff39610ff48570b1b8909e75b8
 
 
 Bienvenido al repositorio oficial de la app de administración de Tropical Fancy Fruit.

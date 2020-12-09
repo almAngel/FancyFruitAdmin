@@ -36,7 +36,7 @@ https://www.dropbox.com/s/wgtbfpcmctyajwf/app-debug.apk?dl=0
 
 ## Guia breve de uso:
 
-1. Primero, hemos de instalar la apk en nuestro terminal. La mínima versión de SDK requerido es la API 24 (ANDROID 7 NOUGAT)
+1. Primero, hemos de instalar la apk en nuestro terminal. La mínima versión de SDK requerido es la API 24 (ANDROID 7 NOUGAT).
 2. A continuación, una vez la abramos aparecerá la pantalla de login. Los campos email y password están desactivados por el momento, porque aún no tienen la funcionalidad completa. En su lugar, usaremos el botón de Sign In de Google. Elegiremos nuestra cuenta de Google que **AVISO** *_debe estar registrada en administración_*.
 
 <img style="margin: auto; display: inline-block;"  height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/login.png" />
@@ -67,21 +67,31 @@ Aquí nos damos cuenta de varias cosas. Tenemos dos botones nuevos en la barra s
 
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/panel.png" />
 
-6. Primero, añadiremos una nueva etiqueta. Las etiquetas se usan para clasificar productos. La etiqueta no es más que un nombre identificativo que se puede compartir entre productos. Para ello pulsaremos el botón de la etiqueta en el panel principal. Nos llevará a la lista de etiquetas
+6. Primero, añadiremos una nueva etiqueta. Las etiquetas se usan para clasificar productos. La etiqueta no es más que un nombre identificativo que se puede compartir entre productos. Para ello pulsaremos el botón de la etiqueta en el panel principal. Nos llevará a la lista de etiquetas.
 
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tags.png" />
 
-7. Añadiremos una tag pulsando el botón flotante de abajo a la derecha con el símbolo de adición. Al hacer esto, nos llevará a la pantalla de añadir etiqueta. Una vez aquí introduciremos un nombre y pulsaremos guardar
+7. Añadiremos una etiqueta pulsando el botón flotante de abajo a la derecha con el símbolo de adición. Al hacer esto, nos llevará a la pantalla de añadir etiqueta. Una vez aquí introduciremos un nombre y pulsaremos guardar.
 
-<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_añdir.png" />
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_añadir.png" />
 
-Si la operación se ha completado con éxito aparecerá el siguiente mensaje:
+Si la operación se ha completado con éxito aparecerá el siguiente mensaje: </br>
 <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_ok.png" />
 
 Por el contrario, aparecerá un mensaje genérico indicando que no se ha podido completar con éxito.
 
-**NOTA**: 
+Finalmente, una vez volvamos a la lista de etiquetas, nuestra nueva etiqueta debe aparecer. Podemos eliminar nuestras etiquetas si requerimos de ello, pero no podemos editar. Al ser un campo simplemente se decidió no incluir la funcionalidad en producción. Como alternativa sugerimos que se elimine la etiqueta y se cree una nueva.
 
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_nuevo.png" />
+<div style="display: flex;">
+  <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_eliminar.png" />
+  <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_eliminar_aviso.png" />
+  <img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/tag_eliminar_ok.png" />
+</div>
+
+**NOTA**: Si intentamos cancelar el formulario de añadir nueva etiqueta nos saldrá un mensaje como este:
+
+<img style="margin: auto" height=520 src="https://github.com/almAngel/FancyFruitAdmin/blob/master/screenshots/formulario_aviso.png" />
 
 
 ## Por algún motivo no puedo utilizarla:
